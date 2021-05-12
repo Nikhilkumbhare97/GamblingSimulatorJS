@@ -15,6 +15,8 @@ var winTime = 0;
 var loseTime = 0;
 var totalAmountWin = 0;
 var totalAmountLose = 0;
+var won = new Array;
+var lose = new Array;
 
 game = () => {
     total = STAKE;
@@ -37,13 +39,27 @@ daysPlaying = () => {
         Amount = game();
         if (Amount > STAKE) {
             totalAmountWin += (Amount - STAKE);
+            won.push(day);
         } else {
             totalAmountLose += (STAKE - Amount);
+            lose.push(day);
         }
         console.log("Total for Day " + day + " is : " + Amount);
     }
+
     console.log("Total Amount Won : " + totalAmountWin);
     console.log("Total Amount Lose : " + totalAmountLose);
+    console.log("Won Days : " + won);
+    console.log("Lose Days : " + lose);
+
+    if (won.length > lose.length) {
+        console.log("Gambler Won by : " + (won.length - lose.length + " Days and Overall Amount Won : " + (totalAmountWin - totalAmountLose)));
+    } else if (lose.length > won.length) {
+        console.log("Gambler Lose by : " + (lose.length - won.length + " Days and Overall Amount Lose : " + (totalAmountLose - totalAmountWin)));
+    } else {
+        console.log("Tie No Amount Lose or Gain")
+    }
+
     console.log("Total Win Time : " + winTime);
     console.log("Total Lose Time : " + loseTime);
 }

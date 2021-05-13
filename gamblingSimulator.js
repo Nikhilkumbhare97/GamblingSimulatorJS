@@ -17,6 +17,7 @@ var totalAmountWin = 0;
 var totalAmountLose = 0;
 var won = new Array;
 var lose = new Array;
+var luck = new Map;
 
 game = () => {
     total = STAKE;
@@ -40,9 +41,11 @@ daysPlaying = () => {
         if (Amount > STAKE) {
             totalAmountWin += (Amount - STAKE);
             won.push(day);
+            luck.set(day, Amount);
         } else {
             totalAmountLose += (STAKE - Amount);
             lose.push(day);
+            luck.set(day, Amount);
         }
         console.log("Total for Day " + day + " is : " + Amount);
     }
@@ -62,5 +65,15 @@ daysPlaying = () => {
 
     console.log("Total Win Time : " + winTime);
     console.log("Total Lose Time : " + loseTime);
+    luckiestAndUnluckiestDay();
+}
+
+luckiestAndUnluckiestDay = () => {
+    var luckySortMap = new Map([...luck.entries()].sort((a, b) => b[1] - a[1]));
+    var unluckySortMap = new Map([...luck.entries()].sort((a, b) => a[1] - b[1]));
+    var luckiestday = luckySortMap.keys();
+    var unluckiestday = unluckySortMap.keys();
+    console.log("Luckiest Day is : " + luckiestday.next().value);
+    console.log("UnLuckiest Day is : " + unluckiestday.next().value);
 }
 daysPlaying();

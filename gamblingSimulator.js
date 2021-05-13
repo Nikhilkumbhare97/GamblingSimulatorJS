@@ -65,15 +65,28 @@ daysPlaying = () => {
 
     console.log("Total Win Time : " + winTime);
     console.log("Total Lose Time : " + loseTime);
-    luckiestAndUnluckiestDay();
+    luckiestAndUnluckiestDay(replayGame);
 }
 
-luckiestAndUnluckiestDay = () => {
-    var luckySortMap = new Map([...luck.entries()].sort((a, b) => b[1] - a[1]));
-    var unluckySortMap = new Map([...luck.entries()].sort((a, b) => a[1] - b[1]));
-    var luckiestday = luckySortMap.keys();
-    var unluckiestday = unluckySortMap.keys();
-    console.log("Luckiest Day is : " + luckiestday.next().value);
-    console.log("UnLuckiest Day is : " + unluckiestday.next().value);
+luckiestAndUnluckiestDay = (callback) => {
+    setTimeout(() => {
+        var luckySortMap = new Map([...luck.entries()].sort((a, b) => b[1] - a[1]));
+        var unluckySortMap = new Map([...luck.entries()].sort((a, b) => a[1] - b[1]));
+        var luckiestday = luckySortMap.keys();
+        var unluckiestday = unluckySortMap.keys();
+        console.log("Luckiest Day is : " + luckiestday.next().value);
+        console.log("UnLuckiest Day is : " + unluckiestday.next().value);
+        callback();
+    }, 2000)
+}
+
+replayGame = () => {
+    var string = require("readline-sync");
+    var answer = string.question("Do you want to play again: ");
+    if (answer == "yes" || answer == "y") {
+        daysPlaying();
+    } else {
+        console.log("Thank you for playing")
+    }
 }
 daysPlaying();
